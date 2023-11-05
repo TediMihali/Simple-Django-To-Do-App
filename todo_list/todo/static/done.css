@@ -1,0 +1,22 @@
+.task{
+width:50%;
+min-width:100px;
+margin:10px 45%;
+}
+
+h1{
+margin:10px auto;
+text-align:center;
+}
+
+li, p, button{
+display: inline;
+margin:5px;
+}
+
+#TasksToDo{
+margin: 10px auto;
+display: block;
+min-width:100px;
+margin:10px auto;
+}

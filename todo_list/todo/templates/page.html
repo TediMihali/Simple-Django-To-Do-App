@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  <h1 id="title">Tasks to do:</h1>
+<link rel="stylesheet" href="{% static "page.css" %}">
+<ol>
+  {% for task in tasks %}
+    {% if not task.is_done %}
+      <div class="task" id="task-{{ task.id }}">
+        <li>{{ task.name }}</li>
+        <button onclick="markTaskDone({{ task.id }})">Done</button>
+        <button onclick="deleteTask({{ task.id }})">Delete</button>
+      </div>
+    {% endif %}
+  {% endfor %}
+</ol>
+
+<button  id="b1" onclick="navigateToDone({% url "done" %})">Done tasks</button>
+<button id="b2" onclick="navigateToAdd('{% url "create_task" %}')">Add Task</button>
+<script>
+  function markTaskDone(taskId) {
+    fetch(`/mark_task_done/${taskId}/`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Update the UI to reflect that the task is done
+          document.getElementById(`task-${taskId}`).style.display = "none";
+        } else {
+          alert("Failed to mark the task as done.");
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+ function deleteTask(taskId) {
+    fetch(`/delete_task/${taskId}/`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Remove the task from the UI
+          document.getElementById(`task-${taskId}`).remove();
+        } else {
+          alert("Failed to delete the task.");
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  function navigateToDone(url) {
+    window.location.href = url; // Navigate to the 'done/' URL
+  }
+
+
+function navigateToAdd(url){
+  window.location.href = url;
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static "done.css" %}">
+<ol>
+  <h1>Done tasks:</h1>
+  {% for task in tasks %}
+    {% if task.is_done %}
+      <div class="task" id="task-{{ task.id }}">
+        <li>{{ task.name }} </li>
+        <button onclick="deleteTask({{ task.id }})">Delete</button>
+      </div>
+    {% endif %}
+  {% endfor %}
+</ol>
+
+<button id="TasksToDo" onclick="navigateToTasks('{% url "list_todo" %}')">Tasks</button>
+
+<script>
+
+ function deleteTask(taskId) {
+    fetch(`/delete_task/${taskId}/`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Remove the task from the UI
+          document.getElementById(`task-${taskId}`).remove();
+        } else {
+          alert("Failed to delete the task.");
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  function navigateToTasks(url){
+    window.location.href = url;
+  }
+</script>
+
+{% endblock %}

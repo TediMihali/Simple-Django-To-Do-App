@@ -1,0 +1,17 @@
+.task{
+width:25%;
+min-width:100px;
+margin:10px auto;
+}
+
+li, button{
+display: inline;
+margin:5px;
+}
+
+#b2{
+margin: 10px auto;
+display:block;
+}
+
+

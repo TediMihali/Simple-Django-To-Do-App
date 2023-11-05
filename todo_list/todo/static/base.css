@@ -1,0 +1,10 @@
+*{
+    background-color: #DDD;
+}
+
+#title{
+ width:25%;
+ min-width:100px;
+ margin:auto;
+}
+
